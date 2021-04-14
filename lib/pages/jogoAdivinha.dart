@@ -112,9 +112,15 @@ class _JogoAdivinhaState extends State<JogoAdivinha> {
 
   void _confere() {
     if (letra == null) letra = _novaLetra();
-    print("Letra gerada: "+letra);
+    String letraDigitada = _tLetra.text.toUpperCase();
+
+
+    print("Letra no código: [" +String.fromCharCode(letra)+ "] letra digitada: ["+letraDigitada+"]");
+    print("Letra no código: [" +letra.toString()+ "] letra digitada: ["+letraDigitada.codeUnitAt(0).toString()+"]");
+
+
     setState(() {
-      if (_tLetra.text == letra) {
+      if (letraDigitada.codeUnitAt(0) == letra) {
         _infoText = "Acertou em " +
             tentativas.toString() +
             " tentativas!\nUma nova letra secreta foi gerada!";
@@ -124,20 +130,25 @@ class _JogoAdivinhaState extends State<JogoAdivinha> {
         tentativas++;
 
         //trabalhar com strings
-        if (_tLetra.text.toUpperCase().codeUnitAt(0) < "A".codeUnitAt(0) || _tLetra.text.toUpperCase().codeUnitAt(0) > "Z".codeUnitAt(0) ) {
+        if (letraDigitada.codeUnitAt(0) < "A".codeUnitAt(0) ||letraDigitada.codeUnitAt(0) > "Z".codeUnitAt(0) ) {
           _infoText = "A letra secreta está entre a e z, maiúsculos!!";
-        } else if (_tLetra.text.codeUnitAt(0) < letra.codeUnitAt(0) ) {
-          _infoText = "Quase! a letra vem antes de " + _tLetra.text + "!";
+        } else if (letraDigitada.codeUnitAt(0) > letra ) {
+          _infoText = "Quase! a letra vem antes de " + letraDigitada + "..";
         } else {
-          _infoText = "Quase! a letra vem depois de " + _tLetra.text + "!";
+          _infoText = "Quase! a letra vem depois de " + letraDigitada + "..";
         }
       }
     });
   }
 
-  String _novaLetra() {
+  int _novaLetra() {
+
     int num = random.nextInt(26);
-    return ("a".codeUnitAt(0) + num).toString();
+    int novoNum = ("A".codeUnitAt(0) + num);
+    print("Nova letra aleatoria: "+String.fromCharCode(novoNum));
+
+
+    return novoNum ;
   }
 
   // // Widget text
