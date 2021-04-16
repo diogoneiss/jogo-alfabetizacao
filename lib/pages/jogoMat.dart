@@ -16,14 +16,14 @@ class _JogoMatState extends State<JogoMat> {
   int acertos = 0;
   int erros = 0;
   int numero1 = 0;
-  int numero2 = 0;
+
   String operacao = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Jogo da tabuada"),
+        title: Text("Jogo da sequência"),
         centerTitle: true,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.refresh), onPressed: _resetFields)
@@ -40,8 +40,7 @@ class _JogoMatState extends State<JogoMat> {
     acertos = 0;
     erros = 0;
     numero1 = 0;
-    numero2 = 0;
-    operacao = "";
+
     setState(() {
       _equacaoText = "Aperte enviar para começar!";
       _formKey = GlobalKey<FormState>();
@@ -125,10 +124,7 @@ class _JogoMatState extends State<JogoMat> {
 
         if (resposta == int.parse(_tNumero.text)) {
           acertos++;
-          if (operacao == "*" || operacao == '/')
-            pontos = pontos + 10;
-          else
-            pontos = pontos + 5;
+          pontos++;
         } else
           erros++;
         print(pontos);
@@ -145,86 +141,20 @@ class _JogoMatState extends State<JogoMat> {
   int _getResposta() {
     int resposta;
 
-    switch (operacao) {
-      case "+":
-        resposta = numero1 + numero2;
-        break;
-      case "-":
-        resposta = numero1 - numero2;
-        break;
-      case "*":
-        resposta = numero1 * numero2;
-        break;
-      case "/":
-        resposta = numero1 ~/ numero2;
-        break;
-      default:
-    }
+    resposta = numero1 + 1;
 
     return resposta;
   }
 
   void _novaEquacao() {
-    int x = _novoNumero(4);
+    int x = _novoNumero(10);
     // use isso apenas para testar uma operacao especifica sempre.
     //x = 0;
 
-    switch (x) {
-      case 0:
-        operacao = "+";
-        break;
-      case 1:
-        operacao = "-";
-        break;
-      case 2:
-        operacao = "*";
-        break;
-      case 3:
-        operacao = "/";
-        break;
-      default:
-        operacao = "+";
-    }
-
-    //tenho que tomar cuidado para ter apenas divisoes inteiras no joguinho
-    if(operacao == '/'){
-      //resposta = numero 1 / numero 2
-      numero2 = _novoNumero(10);
-
-      int temp = _novoNumero(11);
-      if(temp == 1 || temp == 2)
-        temp = 3;
-
-      if(numero2 == 0 ||numero2 == 1){
-        numero2 = 2;
-      }
-      numero1 = numero2 * temp;
-
-    }
-
-    else if (operacao == "*") {
-      numero1 = _novoNumero(10) + 1;
-      numero2 = _novoNumero(10) + 1;
-    }
-    else {
-      numero1 = _novoNumero(30) + 1;
-      numero2 = _novoNumero(30) + 1;
-
-      //swappar se um for menor que o outro, resultando em numeros negativos ( que nao queremos)
-      if (numero1 < numero2 && operacao == "-") {
-        int aux = numero1;
-        numero1 = numero2;
-        numero2 = aux;
-      }
-    }
 
     setState(() {
-      _equacaoText = numero1.toString() +
-          " " +
-          operacao +
-          " " +
-          numero2.toString() +
-          " = ?";
+      numero1 = x;
+      _equacaoText = "Seguinte ao " + x.toString() + " ?";
     });
   }
 
