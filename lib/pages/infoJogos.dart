@@ -37,7 +37,7 @@ class _InfoJogosState extends State<InfoJogos> {
   _textInfo() {
     return Text(
       "Jogo do Adivinha:\n" +
-          "-Tente adivinhar o número secreto com menor número de tentativas possiveis.\n" +
+          "-Tente adivinhar a letra secreta com menor número de tentativas possiveis.\n" +
           "-Você tera a dica de que o número é menor ou maior do que o seu chute.\n",
       textAlign: TextAlign.left,
       style: TextStyle(color: Colors.black, fontSize: 19),
@@ -48,7 +48,7 @@ class _InfoJogosState extends State<InfoJogos> {
     return Text(
       "\nJogo da Matematica:\n" +
           "-Tente fazer a maior pontuação, com o menor número de erros possiveis.\n" +
-          "-Soma e subtração: 5 pontos.\n" "-Multiplicação: 10 pontos.",
+          "-Adivinhe o próximo número da sequência.",
       textAlign: TextAlign.left,
       style: TextStyle(color: Colors.black, fontSize: 19),
     );
